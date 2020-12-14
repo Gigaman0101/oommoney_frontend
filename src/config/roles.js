@@ -20,11 +20,13 @@ const components = {
 const roles = {
     GUEST: [
         components.login,
-        components.register
+        components.register,
+        components.home
     ],
     USER: [
         components.login,
-        components.register
+        components.register,
+        components.home
     ]
 };
 

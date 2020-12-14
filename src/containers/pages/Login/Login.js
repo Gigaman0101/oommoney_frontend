@@ -52,7 +52,7 @@ function Login() {
                 });
                 LocalStorageService.setToken(res.data.token);
                 setRole("USER");
-                history.push('/');
+                history.push('/home');
             })
             .catch(err => {
                 console.log(err);
@@ -65,7 +65,7 @@ function Login() {
     return (
         <Row justify="center">
             <Col xs={20} sm={16} md={12} lg={8} xl={4}>
-                <img style={{ maxHeight: "132px", margin: "50px" }} src="https://www.facebook.com/images/fb_icon_325x325.png" alt="logo" />
+                <img style={{ maxHeight: "132px", margin: "50px" }} src="https://pbs.twimg.com/profile_images/882982636301332484/8p1Y_rVC.png" alt="logo" />
                 <Form
                     name="normal_login"
                     className="login-form"
@@ -98,12 +98,12 @@ function Login() {
                             </a>
                     </Form.Item>
 
-                    <Form.Item>
+                    <Form.Item >
                         <StyledButton style={{ marginRight: "10px" }} type="primary" htmlType="submit" className="login-form-button">
                             Log in
                         </StyledButton>
-                        Or
-                        <Link href="/">register now!</Link>
+                        <div style={{ marginRight: "10px" }}>Or</div>
+                        <Link to="/register">register now!</Link>
                     </Form.Item>
                 </Form>
             </Col>
