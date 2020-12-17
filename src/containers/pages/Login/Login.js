@@ -78,6 +78,7 @@ function Login() {
                     >
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                     </Form.Item>
+                    
                     <Form.Item
                         name="password"
                         rules={[{ required: true, message: 'Please input your Password!' }]}
@@ -88,6 +89,7 @@ function Login() {
                             placeholder="Password"
                         />
                     </Form.Item>
+
                     <Form.Item>
                         <Form.Item name="remember" valuePropName="checked" noStyle>
                             <Checkbox>Remember me</Checkbox>
