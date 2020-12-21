@@ -8,16 +8,19 @@ import jwtDecode from 'jwt-decode';
 
 function App() {
 
+  // check ว่า มี
   let initialUser = null;
   const token = LocalStorageService.getToken();
   if (token) {
     initialUser = jwtDecode(token);
-  }
+  };
 
   const [role, setRole] = useState(LocalStorageService.getRole());
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [user, setUser] = useState(initialUser);
   const [bag, setBag] = useState('');
+  const [growBag, setGrowBag] = useState(false);
+  const [funBag, setFunBag] = useState(false);
 
   console.log(user);
 
@@ -27,7 +30,7 @@ function App() {
 
   return (
     <div className="App">
-      <UserContext.Provider value={{ role, setRole, setShowLoginForm, showLoginForm, showModal, user, setUser, bag, setBag }}>
+      <UserContext.Provider value={{ role, setRole, setShowLoginForm, showLoginForm, showModal, user, setUser, bag, setBag, growBag, setGrowBag, funBag, setFunBag }}>
         <Navbar showModal={showModal} />
         <PrivateRoutes />
       </UserContext.Provider>

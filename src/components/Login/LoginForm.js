@@ -106,7 +106,7 @@ function LoginForm() {
                             <Form.Item >
                                 <StyledButton style={{ marginRight: "10px" }} type="primary" htmlType="submit" className="login-form-button">
                                     Log in
-                        </StyledButton>
+                                </StyledButton>
                                 <div style={{ marginRight: "10px" }}>Or</div>
                                 <Link to="/register">register now!</Link>
                             </Form.Item>

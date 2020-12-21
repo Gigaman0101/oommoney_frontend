@@ -57,7 +57,8 @@ function Login() {
             .catch(err => {
                 console.log(err);
                 notification.error({
-                    description: "Login failed."
+                    description: "Login failed.",
+                    placement: 'bottomRight'
                 });
             });
     };
@@ -78,7 +79,7 @@ function Login() {
                     >
                         <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
                     </Form.Item>
-                    
+
                     <Form.Item
                         name="password"
                         rules={[{ required: true, message: 'Please input your Password!' }]}
