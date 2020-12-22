@@ -15,7 +15,7 @@ function Money() {
     const [showBagForm, setShowBagForm] = useState(false);
     const [createGrow, setCreateGrow] = useState(false);
     const [createFun, setCreateFun] = useState(false);
-    // const [growBag, setGrowBag] = useState(false);
+    const [allMoney, setAllMoney] = useState("");
     // const [funBag, setFunBag] = useState(false);
 
 
@@ -27,6 +27,12 @@ function Money() {
         console.log('bag:', bag);
     };
 
+    const fetchAllMoney = async () => {
+        const res = await axios.get("/bags/all_money")
+        setAllMoney(res.data);
+        console.log(allMoney);
+    }
+
     // เปิดปิด modal
     const showBagModal = () => {
         setShowBagForm(true);
@@ -36,7 +42,8 @@ function Money() {
     // มีกระเป๋าไหม 
     const fetchGrow = async () => {
         const res1 = await axios.get("http://localhost:8000/bags/grow");
-        if (res1.data.status) {
+        if (res1.data.status === false) {
+            console.log(res1.data.status)
             return setCreateGrow(res1.data.status);
         } else {
             setCreateGrow(true);
@@ -47,7 +54,8 @@ function Money() {
     console.log('growBag:', growBag);
     const fetchFun = async () => {
         const res2 = await axios.get("http://localhost:8000/bags/fun");
-        if (res2.data.status) {
+        if (res2.data.status === false) {
+            console.log(res2.data.status)
             return setCreateFun(res2.data.status);
         } else {
             setCreateFun(true);
@@ -71,6 +79,7 @@ function Money() {
         fetchBag();
         fetchFun();
         fetchGrow();
+        fetchAllMoney();
     }, []);
 
     const onFinish = values => {
@@ -85,8 +94,10 @@ function Money() {
                 });
                 if (values.type_bag === "FUN BAG") {
                     setCreateFun(true);
+                    fetchFun();
                 } else {
-                    setCreateGrow(true)
+                    setCreateGrow(true);
+                    fetchGrow();
                 }
                 history.push('/money');
             })
@@ -117,7 +128,7 @@ function Money() {
                     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
                         <div>ยอดเงินทั้งหมด</div>
                         <div>
-                            {bag === "" ? 0 : bag.amount} บาท
+                            {bag === "" ? 0 : allMoney} บาท
                         </div>
                     </div>
                 </Row>
@@ -138,20 +149,20 @@ function Money() {
                         <Col style={{ backgroundColor: "white", flexDirection: "column", alignItems: "center", display: "flex", justifyContent: "center", width: "300px", height: "250px", textAlign: "center", borderRadius: "10px" }}>
                             <div style={{ width: "50%", height: "50%", display: "flex", justifyContent: "center", flexDirection: "column" }}>
                                 <div >Grow</div>
-                                <div >{growBag.name_bag}</div>
+                                <div >ชื่อบัญชี: {growBag.name_bag}</div>
                                 {/* <div>{growBag ? "0" : growBag.amount} บาท</div> */}
                                 <div>{growBag.status !== false ? growBag.amount : 0} บาท</div>
                             </div>
-                            {growBag.status !== false ? <button onClick={handleGrowPage} style={{ cursor: "pointer" }}>ดูบัญชี</button> : <button onClick={showBagModal} style={{ cursor: "pointer" }}>สร้างกระเป๋า Grow กัน</button>}
+                            {createGrow ? <button onClick={handleGrowPage} style={{ cursor: "pointer" }}>ดูบัญชี</button> : <button onClick={showBagModal} style={{ cursor: "pointer" }}>สร้างกระเป๋า Grow กัน</button>}
                         </Col>
                         <Col style={{ backgroundColor: "white", flexDirection: "column", alignItems: "center", display: "flex", justifyContent: "center", width: "300px", height: "250px", textAlign: "center", borderRadius: "10px" }}>
                             <div style={{ width: "50%", height: "50%", display: "flex", justifyContent: "center", flexDirection: "column" }}>
                                 <div>Fun</div>
-                                <div>{funBag.name_bag}</div>
+                                <div>ชื่อบัญชี: {funBag.name_bag}</div>
                                 {/* <div>{funBag ? 0 : funBag.amount} บาท</div> */}
                                 <div>{funBag.status !== false ? funBag.amount : 0} บาท</div>
                             </div>
-                            {funBag.status !== false ? <button onClick={handleFunPage} style={{ cursor: "pointer" }}>ดูบัญชี</button> : <button onClick={showBagModal} style={{ cursor: "pointer" }}>สร้างกระเป๋า Fun กัน</button>}
+                            {createFun ? <button onClick={handleFunPage} style={{ cursor: "pointer" }}>ดูบัญชี</button> : <button onClick={showBagModal} style={{ cursor: "pointer" }}>สร้างกระเป๋า Fun กัน</button>}
                             <Modal visible={showBagForm} onOk={handleOk} onCancel={handleCancel}>
                                 <Row justify="center">
                                     <Col xs={20} sm={16} md={12} lg={20} xl={24}>
