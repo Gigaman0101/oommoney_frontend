@@ -70,7 +70,6 @@ function Money() {
         setShowBagForm(false);
     };
 
-
     const handleOk = () => {
         setShowBagForm(false);
     };
@@ -151,7 +150,7 @@ function Money() {
                                 <div >Grow</div>
                                 <div >ชื่อบัญชี: {growBag.name_bag}</div>
                                 {/* <div>{growBag ? "0" : growBag.amount} บาท</div> */}
-                                <div>{growBag.status !== false ? growBag.amount : 0} บาท</div>
+                                <div>{growBag.status !== false ? growBag.amount : "0"} บาท</div>
                             </div>
                             {createGrow ? <button onClick={handleGrowPage} style={{ cursor: "pointer" }}>ดูบัญชี</button> : <button onClick={showBagModal} style={{ cursor: "pointer" }}>สร้างกระเป๋า Grow กัน</button>}
                         </Col>

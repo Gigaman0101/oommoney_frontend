@@ -27,7 +27,7 @@ function Navbar(props) {
         <Row justify="space-between" align="middle" style={{ padding: "0 100px", backgroundColor: "pink", height: "10vh" }}>
             <Col>
                 <div style={{ fontSize: "2.5rem", color: "plum" }}>
-                    <Link to="/">OOM money</Link>
+                    <Link to="/" style={{ color: "tomato" }}>OOM money</Link>
                 </div>
             </Col>
             <Col style={{ fontSize: "20px" }}>

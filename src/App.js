@@ -5,15 +5,21 @@ import LocalStorageService from './services/LocalStorageService';
 import UserContext from './context/UserContext';
 import Navbar from './components/Navbar/Navbar';
 import jwtDecode from 'jwt-decode';
+import { useHistory } from 'react-router-dom';
 
 function App() {
+
+  const history = useHistory();
 
   // check ว่า มี
   let initialUser = null;
   const token = LocalStorageService.getToken();
+
   if (token) {
+    console.log(jwtDecode(token));
     initialUser = jwtDecode(token);
   };
+
 
   const [role, setRole] = useState(LocalStorageService.getRole());
   const [showLoginForm, setShowLoginForm] = useState(false);
@@ -22,7 +28,13 @@ function App() {
   const [growBag, setGrowBag] = useState(false);
   const [funBag, setFunBag] = useState(false);
 
-  console.log(user);
+  if (token) {
+    if (initialUser.expire < new Date().getTime()) {
+      LocalStorageService.removeToken()
+      setRole("GUEST");
+      history.push("/");
+    }
+  };
 
   const showModal = () => {
     setShowLoginForm(true);

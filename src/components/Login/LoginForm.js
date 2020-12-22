@@ -6,6 +6,7 @@ import LocalStorageService from '../../services/LocalStorageService';
 import { Link, useHistory } from 'react-router-dom';
 import UserContext from '../../context/UserContext';
 import styled from 'styled-components';
+import jwtDecode from 'jwt-decode';
 
 const StyledButton = styled(Button)`
     background-color: salmon;
@@ -37,7 +38,7 @@ const StyledButton = styled(Button)`
 
 function LoginForm() {
 
-    const { setRole } = useContext(UserContext);
+    const { setRole, setUser } = useContext(UserContext);
     const history = useHistory();
 
     const onFinish = values => {
@@ -50,6 +51,8 @@ function LoginForm() {
                     description: "Login success."
                 });
                 LocalStorageService.setToken(res.data.token);
+                const token = LocalStorageService.getToken();
+                setUser(jwtDecode(token))
                 setRole("USER");
                 history.push('/money');
             })
