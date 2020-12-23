@@ -162,7 +162,7 @@ function Money() {
                                 <div>{funBag.status !== false ? funBag.amount : 0} บาท</div>
                             </div>
                             {createFun ? <button onClick={handleFunPage} style={{ cursor: "pointer" }}>ดูบัญชี</button> : <button onClick={showBagModal} style={{ cursor: "pointer" }}>สร้างกระเป๋า Fun กัน</button>}
-                            <Modal visible={showBagForm} onOk={handleOk} onCancel={handleCancel}>
+                            <Modal title="Create Bag " visible={showBagForm} onOk={handleOk} onCancel={handleCancel}>
                                 <Row justify="center">
                                     <Col xs={20} sm={16} md={12} lg={20} xl={24}>
                                         <Row justify="center">

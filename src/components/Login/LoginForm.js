@@ -69,7 +69,7 @@ function LoginForm() {
             <Col xs={20} sm={16} md={12} lg={20} xl={24}>
                 <Row justify="center">
                     <Col>
-                        <img style={{ maxHeight: "132px", margin: "50px" }} src="https://pbs.twimg.com/profile_images/882982636301332484/8p1Y_rVC.png" alt="logo" />
+                        <img style={{ height: "150px", width: "150px", marginTop: "30px", border: "15px white solid", backgroundColor: "white", borderRadius: "50%", objectFit: "cover" }} src="https://pbs.twimg.com/profile_images/882982636301332484/8p1Y_rVC.png" alt="logo" />
                     </Col>
                 </Row>
                 <Row justify="center">
