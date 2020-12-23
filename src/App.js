@@ -1,11 +1,12 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PrivateRoutes from './containers/PrivateRoutes/PrivateRoutes';
 import LocalStorageService from './services/LocalStorageService';
 import UserContext from './context/UserContext';
 import Navbar from './components/Navbar/Navbar';
 import jwtDecode from 'jwt-decode';
 import { useHistory } from 'react-router-dom';
+import axios from './config/axios';
 
 function App() {
 
@@ -25,8 +26,25 @@ function App() {
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [user, setUser] = useState(initialUser);
   const [bag, setBag] = useState('');
-  const [growBag, setGrowBag] = useState(false);
-  const [funBag, setFunBag] = useState(false);
+  const [growBag, setGrowBag] = useState({});
+  const [funBag, setFunBag] = useState({});
+
+  const fetchFunBag = async () => {
+    const res = await axios.get("/bags/fun");
+    setFunBag(res.data);
+  };
+
+  const fetchGrowBag = async () => {
+    const res = await axios.get("/bags/grow");
+    setGrowBag(res.data);
+  };
+
+  const fetchMoneyBag = async () => {
+    const res = await axios.get("/bags/money");
+    setBag(res.data);
+  };
+
+
 
   if (token) {
     if (initialUser.expire < new Date().getTime()) {
@@ -39,6 +57,14 @@ function App() {
   const showModal = () => {
     setShowLoginForm(true);
   };
+
+  useEffect(() => {
+    if (role === "USER") {
+      fetchFunBag();
+      fetchGrowBag();
+      fetchMoneyBag();
+    }
+  }, [])
 
   return (
     <div className="App">

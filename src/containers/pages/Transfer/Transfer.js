@@ -109,20 +109,36 @@ export const Transfer = () => {
         fetchMyAllBag();
     }, []);
 
+    const checkButton = () => {
+        let isRender = false;
+        allBag.forEach(item => {
+            if (item.type_bag === "FUN BAG" || item.type_bag === "GROW BAG") {
+                isRender = true;
+            }
+        });
+        return isRender;
+    };
+
+    console.log('checkButton: ', checkButton());
+    console.log('allBag: ', allBag);
+
     return (
         <Row justify="center" align="middle" style={{ backgroundColor: "salmon", height: "80vh", margin: "5vh 15vh", border: "2px solid black", borderRadius: "5px" }}>
+            {/* {allBag.reduce() */}
             <Col span={10}>
-                <button onClick={showTransferOutModal} style={{ height: "0%", width: "50%", cursor: "pointer" }}>
+                <button onClick={showTransferOutModal} style={{ height: "0%", width: "50%", cursor: "pointer", fontSize: "20px" }} >
                     โอนไปบัญชีอื่น
                 </button>
             </Col>
-            <Col span={10}>
-                <button onClick={showTransferInModal} style={{ height: "20%", width: "20%", cursor: "pointer" }}>
-                    โอนภายในแอป
+            {checkButton() &&
+                <Col span={10}>
+                    <button onClick={showTransferInModal} style={{ height: "20%", width: "20%", cursor: "pointer", fontSize: "20px" }}>
+                        โอนภายในแอป
                 </button>
-            </Col>
+                </Col>}
+            {/* } */}
 
-            <Modal title="โปรดเลือกช่องทางการแลกเปลื่ยนเงิน" visible={transferOut} onCancel={onCancel} onOk={onOk}>
+            <Modal title="โปรดเลือกช่องทางการแลกเปลื่ยนเงิน" visible={transferOut} onCancel={onCancel} >
                 <Row justify="center">
                     <Col xs={20} sm={16} md={12} lg={20} xl={24}>
                         <Row justify="center">
@@ -135,7 +151,16 @@ export const Transfer = () => {
                                 >
                                     <Form.Item
                                         name="amount"
-                                        rules={[{ required: true }]}
+                                        rules={[
+                                            { required: true },
+                                            ({ getFieldValue }) => ({
+                                                validator(rule, value) {
+                                                    if (value > 0) {
+                                                        return Promise.resolve();
+                                                    }
+                                                    return Promise.reject('จำนวนเงินต้องมากกว่า ศูนย์ !');
+                                                },
+                                            }),]}
                                     >
                                         <Input placeholder="จำนวนเงิน" />
                                     </Form.Item>
@@ -173,7 +198,7 @@ export const Transfer = () => {
             </Modal>
 
 
-            <Modal title="อยากเอาเงินไปกระเป๋าไหนเป็นพิเศษไหม" visible={transferIn} onCancel={onCancel} onOk={onOk}>
+            <Modal title="อยากเอาเงินไปกระเป๋าไหนเป็นพิเศษไหม" visible={transferIn} onCancel={onCancel}>
                 <Row justify="center">
                     <Col xs={20} sm={16} md={12} lg={20} xl={24}>
                         <Row justify="center">
@@ -186,7 +211,16 @@ export const Transfer = () => {
                                 >
                                     <Form.Item
                                         name="amount"
-                                        rules={[{ required: true }]}
+                                        rules={[
+                                            { required: true },
+                                            ({ getFieldValue }) => ({
+                                                validator(rule, value) {
+                                                    if (value > 0) {
+                                                        return Promise.resolve();
+                                                    }
+                                                    return Promise.reject('จำนวนเงินต้องมากกว่า ศูนย์ !!');
+                                                },
+                                            }),]}
                                     >
                                         <Input placeholder="จำนวนเงิน" />
                                     </Form.Item>

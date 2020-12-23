@@ -3,10 +3,18 @@ import { UserOutlined } from '@ant-design/icons';
 import axios from '../../config/axios';
 import React, { useContext, useEffect, useState } from 'react';
 import UserContext from '../../context/UserContext';
+import { useLocation } from 'react-router-dom';
 
 function MyBag(props) {
 
     const { Option } = Select;
+    const location = useLocation();
+
+    console.log(location);
+
+    const { funBag, setFunBag, growBag, setGrowBag, bag, setBag } = useContext(UserContext);
+
+    console.log('funBag: ', funBag)
 
     let newProps = props.funBag || props.growBag || props.bag;
     let newHistory = props.history || props.historyFun || props.historyGrow;
@@ -23,7 +31,7 @@ function MyBag(props) {
     const [showEditForm, setShowEditForm] = useState(false);
     const [showChooseForm, setShowChooseForm] = useState(false);
     const [condition, setCondition] = useState();
-    const [aCondition, setACondition] = useState(null);
+    const [aCondition, setACondition] = useState();
     const [allCondition, setAllCondition] = useState(null);
 
     const columns = [
@@ -92,6 +100,7 @@ function MyBag(props) {
             notification.success({
                 description: "SYNC Condition to BAG success!!"
             })
+            // setACondition(res.data);
         }).catch(err => {
             console.log(err);
             notification.error({
@@ -104,33 +113,53 @@ function MyBag(props) {
     console.log('condition:', condition);
 
     const fetchUseCondition = async () => {
-        if (newProps === props.funBag) {
+        console.log(newProps)
+        console.log(props);
+        console.log(funBag);
+        if (location.pathname === "/funBag") {
             const res = await axios.get("/has/fun");
             setACondition(res.data);
             console.log('res: ', res)
-        } else if (newProps === props.growBag) {
+        } else if (location.pathname === "/growBag") {
             const res = await axios.get("/has/grow");
             setACondition(res.data);
             console.log('res: ', res)
         } else {
             const res = await axios.get("/has/money");
             setACondition(res.data);
-            console.log('res: ', res)
+            console.log('res: ', res);
         }
     };
 
     const fetchAllCondition = async () => {
         const res = await axios.get("/conditions/myConditions");
         setAllCondition(res.data);
-    }
+    };
+
+    // const fetchFunBag = async () => {
+    //     const res = await axios.get("/bags/fun");
+    //     setFunBag(res.data);
+    // };
+
+    // const fetchGrowBag = async () => {
+    //     const res = await axios.get("/bags/grow");
+    //     setGrowBag(res.data);
+    // };
+
+    // const fetchMoneyBag = async () => {
+    //     const res = await axios.get("/bags/money");
+    //     setBag(res.data);
+    // };
 
     useEffect(() => {
-        fetchAllCondition();
+        // await fetchFunBag();
+        // await fetchGrowBag();
+        // await fetchMoneyBag();
         fetchUseCondition();
-    }, []);
+    }, [funBag.id, growBag.id, bag.id]);
 
     // console.log(aCondition[0].id);
-    console.log(allCondition);
+    // console.log(allCondition);
 
     const onDeleteCondition = () => {
         axios.delete(`/has/${aCondition[0].id}`);
@@ -144,33 +173,34 @@ function MyBag(props) {
             <Col span={24}>
 
                 <img style={{ height: "150px", width: "150px", marginTop: "30px", border: "15px white solid", backgroundColor: "white", borderRadius: "50%", objectFit: "cover" }} src="https://pbs.twimg.com/profile_images/882982636301332484/8p1Y_rVC.png" alt="logo" />
-                {props.funBag ?
-                    <div>{props.funBag.name_bag}</div> :
-                    props.growBag ?
-                        <div>{props.growBag.name_bag}</div> :
-                        props.bag ?
-                            <div>{props.bag.name_bag}</div> :
+                {location.pathname === "/funBag" ?
+                    <div>{funBag.name_bag}</div> :
+                    location.pathname === "/growBag" ?
+                        <div>{growBag.name_bag}</div> :
+                        location.pathname === "/moneyBag" ?
+                            <div>{bag.name_bag}</div> :
                             null
                 }
                 <div>ยอดเงินเก็บ</div>
-                {props.funBag ?
-                    <div>{props.funBag.amount} บาท</div> :
-                    props.growBag ?
-                        <div>{props.growBag.amount} บาท</div> :
-                        props.bag ?
-                            <div>{props.bag.amount} บาท</div> :
+                {location.pathname === "/funBag" ?
+                    <div>{funBag.amount} บาท</div> :
+                    location.pathname === "/growBag" ?
+                        <div>{growBag.amount} บาท</div> :
+                        location.pathname === "/moneyBag" ?
+                            <div>{bag.amount} บาท</div> :
                             <div>0 บาท</div>
                 }
                 {aCondition ? <Row justify="center">
                     <Col style={{ marginRight: "10px" }}>
                         <div>เงื่อนไขปัจจุบัน:  {aCondition.map(item => item.ConditionBag.condition_name)}</div>
+                        {/* <div>เงื่อนไขปัจจุบัน:  {aCondition.ConditionBag.condition_name}</div> */}
                     </Col>
                     <Col>
                         <button onClick={onDeleteCondition}>ลบเงื่อนไข</button>
                     </Col>
                 </Row> : null}
-                {/* <button onClick={showEditConditionModal}>สร้างเงื่อนไขใหม่</button> */}
-                <button onClick={showChooseConditionModal}>เลือกเงื่อนไข</button>
+                <button onClick={showEditConditionModal}>สร้างเงื่อนไขใหม่</button>
+                {/* <button onClick={showChooseConditionModal}>เลือกเงื่อนไข</button> */}
                 <Modal title="Create Condition for ME" visible={showEditForm} onOk={handleOk} onCancel={handleCancel}>
                     <Row justify="center">
                         <Col xs={20} sm={16} md={12} lg={20} xl={24}>

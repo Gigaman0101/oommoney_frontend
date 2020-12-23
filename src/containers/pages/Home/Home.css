@@ -7,3 +7,12 @@
 .site-layout .site-layout-background {
   background: #fff;
 }
+.btn-start{
+  background-color: pink;
+  width: 120px;
+  height: 50px;
+  border-radius: 25px;
+  color: white;
+  border-style: none;
+  font-size: 18px;
+}

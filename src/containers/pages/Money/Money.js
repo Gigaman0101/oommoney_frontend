@@ -123,20 +123,20 @@ function Money() {
         <Row justify="center" align="middle" style={{ backgroundColor: "salmon", height: "80vh", margin: "5vh 15vh", border: "2px solid black", borderRadius: "5px" }}>
             <Col span={24} style={{ height: "100%" }}>
                 <Row justify="space-around" style={{ height: "20%" }}>
-                    <div style={{ marginRight: "500px", display: "flex", alignItems: "center", fontSize: "22px" }}>Hello {user.firstName}</div>
+                    <div style={{ marginRight: "500px", display: "flex", alignItems: "center", fontSize: "30px" }}>Hello {user.firstName}</div>
                     <div style={{ display: "flex", justifyContent: "center", flexDirection: "column" }}>
-                        <div>ยอดเงินทั้งหมด</div>
-                        <div>
+                        <div style={{ fontSize: "20px" }}>ยอดเงินทั้งหมด</div>
+                        <div style={{ fontSize: "20px" }}>
                             {bag === "" ? 0 : allMoney} บาท
                         </div>
                     </div>
                 </Row>
                 <Row justify="center" align="middle" style={{ height: "30%", backgroundColor: "pink" }}>
                     <Col>
-                        <div >
+                        <div style={{ fontSize: "20px" }}>
                             {bag.name_bag}
                         </div>
-                        <div>
+                        <div style={{ fontSize: "20px" }}>
                             {bag === "" ? 0 : bag.amount} บาท
                         </div>
                         <button onClick={handleMoneyPage} style={{ cursor: "pointer" }}>ดูบัญชี</button>
@@ -147,19 +147,19 @@ function Money() {
                     <Row justify="space-around" align="middle" >
                         <Col style={{ backgroundColor: "white", flexDirection: "column", alignItems: "center", display: "flex", justifyContent: "center", width: "300px", height: "250px", textAlign: "center", borderRadius: "10px" }}>
                             <div style={{ width: "50%", height: "50%", display: "flex", justifyContent: "center", flexDirection: "column" }}>
-                                <div >Grow</div>
-                                <div >ชื่อบัญชี: {growBag.name_bag}</div>
+                                <div style={{ fontSize: "20px" }}>Grow</div>
+                                <div style={{ fontSize: "20px" }}>ชื่อบัญชี: {growBag.name_bag}</div>
                                 {/* <div>{growBag ? "0" : growBag.amount} บาท</div> */}
-                                <div>{growBag.status !== false ? growBag.amount : "0"} บาท</div>
+                                <div style={{ fontSize: "20px" }}>{growBag.status !== false ? growBag.amount : "0"} บาท</div>
                             </div>
                             {createGrow ? <button onClick={handleGrowPage} style={{ cursor: "pointer" }}>ดูบัญชี</button> : <button onClick={showBagModal} style={{ cursor: "pointer" }}>สร้างกระเป๋า Grow กัน</button>}
                         </Col>
                         <Col style={{ backgroundColor: "white", flexDirection: "column", alignItems: "center", display: "flex", justifyContent: "center", width: "300px", height: "250px", textAlign: "center", borderRadius: "10px" }}>
                             <div style={{ width: "50%", height: "50%", display: "flex", justifyContent: "center", flexDirection: "column" }}>
-                                <div>Fun</div>
-                                <div>ชื่อบัญชี: {funBag.name_bag}</div>
+                                <div style={{ fontSize: "20px" }}>Fun</div>
+                                <div style={{ fontSize: "20px" }}>ชื่อบัญชี: {funBag.name_bag}</div>
                                 {/* <div>{funBag ? 0 : funBag.amount} บาท</div> */}
-                                <div>{funBag.status !== false ? funBag.amount : 0} บาท</div>
+                                <div style={{ fontSize: "20px" }}>{funBag.status !== false ? funBag.amount : 0} บาท</div>
                             </div>
                             {createFun ? <button onClick={handleFunPage} style={{ cursor: "pointer" }}>ดูบัญชี</button> : <button onClick={showBagModal} style={{ cursor: "pointer" }}>สร้างกระเป๋า Fun กัน</button>}
                             <Modal title="Create Bag " visible={showBagForm} onOk={handleOk} onCancel={handleCancel}>
